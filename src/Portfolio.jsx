@@ -4,43 +4,56 @@ import "./Portfolio.css";
 const PROJECTS = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description: "Full-stack shopping app with React, Node.js & Stripe integration. JWT auth, real-time inventory.",
-    tags: ["React", "Node.js", "MongoDB", "Stripe"],
+    title: "Small-Scale ERP System",
+    description: "Built a small-scale ERP solution during internship at Satya Technologies. Handled modules for inventory, basic HR, and reporting using ASP.NET MVC and SQL Server with role-based access control.",
+    tags: ["C#", "ASP.NET MVC", "SQL Server", "Web API"],
     link: "#",
     year: "2024",
+    type: "Internship",
   },
   {
     id: 2,
-    title: "Dev Dashboard",
-    description: "Real-time metrics dashboard with WebSocket updates, chart visualizations & dark/light mode.",
-    tags: ["TypeScript", "WebSockets", "D3.js", "Express"],
+    title: "Vision Desk App",
+    description: "Desktop application built with Python featuring computer vision capabilities. Designed for productivity with real-time image processing and an intuitive GUI.",
+    tags: ["Python", "OpenCV", "Desktop App", "GUI"],
     link: "#",
     year: "2024",
+    type: "Personal",
   },
   {
     id: 3,
-    title: "AI Note App",
-    description: "Smart note-taking app powered by OpenAI API. Auto-summarization & semantic search.",
-    tags: ["Next.js", "OpenAI", "PostgreSQL", "Tailwind"],
+    title: "Static Web Pages (Freelance)",
+    description: "Delivered multiple static websites for freelance clients — responsive layouts, clean UI, and fast load times built with React.js and vanilla HTML/CSS.",
+    tags: ["React.js", "HTML", "CSS", "JavaScript"],
     link: "#",
     year: "2023",
+    type: "Freelance",
   },
   {
     id: 4,
-    title: "CLI Task Manager",
-    description: "Terminal-based productivity tool in Rust. File persistence, tagging, priority queues.",
-    tags: ["Rust", "CLI", "SQLite"],
+    title: "Home Automation (Arduino)",
+    description: "Academic project using Arduino Uno and Bluetooth sensor to remotely control home appliances from anywhere. Implemented device pairing and real-time toggle control.",
+    tags: ["Arduino", "Bluetooth", "C++", "IoT"],
     link: "#",
-    year: "2023",
+    year: "2022",
+    type: "Academic",
+  },
+  {
+    id: 5,
+    title: "Real-Time Clock (VLSI)",
+    description: "Designed a real-time clock IC that keeps accurate track of current time using VLSI techniques. Implemented low-power design principles for embedded use.",
+    tags: ["VLSI", "Embedded", "Hardware", "RTL"],
+    link: "#",
+    year: "2022",
+    type: "Academic",
   },
 ];
 
 const SKILLS = [
-  { category: "Frontend", items: ["React", "Next.js", "TypeScript", "CSS / Tailwind"] },
-  { category: "Backend", items: ["Node.js", "Express", "Python", "REST & GraphQL"] },
-  { category: "Database", items: ["PostgreSQL", "MongoDB", "Redis", "Prisma"] },
-  { category: "DevOps", items: ["Docker", "GitHub Actions", "Vercel", "AWS basics"] },
+  { category: "Languages", items: ["C#", "JavaScript", "Python", "SQL", "HTML / CSS"] },
+  { category: "Frameworks", items: ["ASP.NET MVC", "ASP.NET Web API", "React.js", "OpenCV"] },
+  { category: "Tools & IDEs", items: ["Visual Studio", "VS Code", "SQL Server", "Git"] },
+  { category: "Concepts", items: ["REST APIs", "MVC Pattern", "Role-Based Auth", "CRUD Apps"] },
 ];
 
 function useInView(threshold = 0.15) {
@@ -98,7 +111,7 @@ function Navbar({ active }) {
   }, []);
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
-      <span className="nav-logo">YN</span>
+      <span className="nav-logo">GS</span>
       <ul className="nav-links">
         {["projects", "skills", "contact"].map((s) => (
           <li key={s}>
@@ -119,20 +132,21 @@ function Hero() {
       <div className={`hero-content ${inView ? "visible" : ""}`}>
         <p className="hero-greeting">Hey, I'm</p>
         <h1 className="hero-name">GAJULA SAISHIVA</h1>
-        <p className="hero-role">Software Developer</p>
+        <p className="hero-role">Software Developer · .NET & Web</p>
         <p className="hero-bio">
-          I build fast, clean, and thoughtful digital products. Focused on great UX, solid architecture & shipping things that work.
+          Fresher with 1.5+ yrs of freelance experience, building ERP systems,
+          desktop tools & web interfaces. I write clean backend code and ship things that actually work.
         </p>
         <div className="hero-actions">
           <a href="#projects" className="btn-primary">View Work</a>
           <a href="#contact" className="btn-ghost">Get in touch</a>
         </div>
         <div className="hero-stats">
-          <div className="stat"><span className="stat-n">12+</span><span className="stat-l">Projects</span></div>
+          <div className="stat"><span className="stat-n">5+</span><span className="stat-l">Projects</span></div>
           <div className="stat-div" />
-          <div className="stat"><span className="stat-n">3 yrs</span><span className="stat-l">Experience</span></div>
+          <div className="stat"><span className="stat-n">1.5 yrs</span><span className="stat-l">Freelance</span></div>
           <div className="stat-div" />
-          <div className="stat"><span className="stat-n">8+</span><span className="stat-l">Tech stack</span></div>
+          <div className="stat"><span className="stat-n">6 mo</span><span className="stat-l">Internship</span></div>
         </div>
       </div>
       <div className={`hero-visual ${inView ? "visible" : ""}`}>
@@ -140,9 +154,9 @@ function Hero() {
           <div className="avatar-ring" />
           <div className="avatar-initials">GS</div>
         </div>
-        <div className="floating-badge badge-1">React</div>
-        <div className="floating-badge badge-2">Node.js</div>
-        <div className="floating-badge badge-3">TypeScript</div>
+        <div className="floating-badge badge-1">C# / .NET</div>
+        <div className="floating-badge badge-2">Python</div>
+        <div className="floating-badge badge-3">React.js</div>
       </div>
     </section>
   );
@@ -151,8 +165,8 @@ function Hero() {
 function Projects() {
   const [ref, inView] = useInView();
   const [filter, setFilter] = useState("All");
-  const allTags = ["All", ...new Set(PROJECTS.flatMap((p) => p.tags))];
-  const filtered = filter === "All" ? PROJECTS : PROJECTS.filter((p) => p.tags.includes(filter));
+  const types = ["All", "Internship", "Freelance", "Personal", "Academic"];
+  const filtered = filter === "All" ? PROJECTS : PROJECTS.filter((p) => p.type === filter);
   return (
     <section id="projects" className="section" ref={ref}>
       <div className={`section-header ${inView ? "visible" : ""}`}>
@@ -160,7 +174,7 @@ function Projects() {
         <h2 className="section-title">Selected Projects</h2>
       </div>
       <div className={`filter-bar ${inView ? "visible" : ""}`}>
-        {allTags.slice(0, 7).map((t) => (
+        {types.map((t) => (
           <button key={t} className={`filter-btn ${filter === t ? "active" : ""}`} onClick={() => setFilter(t)}>
             {t}
           </button>
@@ -230,7 +244,7 @@ function Skills() {
 function Contact() {
   const [ref, inView] = useInView();
   const [copied, setCopied] = useState(false);
-  const email = "thisissaishiva@email.com";
+  const email = "thisissaishiva@gmail.com";
   const copy = () => {
     navigator.clipboard.writeText(email);
     setCopied(true);
@@ -241,7 +255,10 @@ function Contact() {
       <div className={`contact-inner ${inView ? "visible" : ""}`}>
         <span className="section-label">Contact</span>
         <h2 className="section-title">Let's build something</h2>
-        <p className="contact-sub">Open to full-time roles, freelance, and interesting collaborations.</p>
+        <p className="contact-sub">
+          Open to full-time .NET / software developer roles, freelance web projects,
+          and interesting collabs. Based in Hyderabad.
+        </p>
         <button className="email-pill" onClick={copy}>
           <span>{email}</span>
           <span className="copy-label">{copied ? "Copied!" : "Copy"}</span>
@@ -249,7 +266,7 @@ function Contact() {
         <div className="social-links">
           <a href="https://github.com" target="_blank" rel="noreferrer" className="social-btn">GitHub</a>
           <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="social-btn">LinkedIn</a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-btn">Twitter</a>
+          <a href="tel:+916301024319" className="social-btn">+91 6301024319</a>
         </div>
       </div>
     </section>
